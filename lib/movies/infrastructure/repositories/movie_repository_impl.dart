@@ -17,7 +17,7 @@ class MovieRepositoryImpl implements MovieRepository {
 
   @override
   Future<List<Movie>> searchMovies(String query) =>
-      apiService.fetchMovies("search/movie&query=$query");
+      apiService.fetchMovies("search/movie", params: {"query": query});
       
   @override
   Future<Movie> getMovieDetails(int id) async{

@@ -4,7 +4,7 @@ class MovieState {
   final List<Movie> trending;
   final List<Movie> nowPlaying;
   final List<Movie> searchResults;
-  final Movie? selectedMovie; 
+  final Movie? selectedMovie;
   final bool isLoading;
   final String error;
 
@@ -22,7 +22,7 @@ class MovieState {
     List<Movie>? nowPlaying,
     List<Movie>? searchResults,
     bool? isLoading,
-    String? error, 
+    String? error,
     Movie? selectedMovie,
   }) {
     return MovieState(

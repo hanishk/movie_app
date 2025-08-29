@@ -9,6 +9,7 @@ import 'package:movie_app/movies/domain/usecases/get_trending_movies.dart';
 import 'package:movie_app/movies/domain/usecases/search_movies.dart';
 import 'package:movie_app/movies/presentation/pages/home_page.dart';
 import 'package:movie_app/movies/presentation/pages/movie_detail_page.dart';
+import 'package:movie_app/movies/presentation/pages/search_page.dart';
 
 
 class AppRouter {
@@ -46,6 +47,22 @@ class AppRouter {
     );
   },
 ),
+// 🔍 Search route
+      GoRoute(
+        path: '/search',
+        name: 'search',
+        builder: (context, state) {
+          return BlocProvider(
+            create: (_) => MovieCubit(
+              sl<GetTrendingMovies>(),
+              sl<GetNowPlayingMovies>(),
+              sl<SearchMovies>(),
+              sl<GetMovieDetails>(),
+            ),
+            child: const SearchPage(),
+             );
+            },
+      ),
 
       
     ],

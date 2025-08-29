@@ -1,12 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/movies/application/movie_state.dart';
 import 'package:movie_app/movies/domain/usecases/get_movie_details.dart';
-import 'package:movie_app/movies/presentation/pages/movie_detail_page.dart';
-import '../domain/entities/movie.dart';
 import '../domain/usecases/get_trending_movies.dart';
 import '../domain/usecases/get_now_playing_movies.dart';
 import '../domain/usecases/search_movies.dart';
-
 
 class MovieCubit extends Cubit<MovieState> {
   final GetTrendingMovies getTrendingMovies;
@@ -14,8 +11,12 @@ class MovieCubit extends Cubit<MovieState> {
   final SearchMovies searchMovies;
   final GetMovieDetails movieDetails;
 
-  MovieCubit(this.getTrendingMovies, this.getNowPlayingMovies, this.searchMovies, this.movieDetails)
-      : super(MovieState());
+  MovieCubit(
+    this.getTrendingMovies,
+    this.getNowPlayingMovies,
+    this.searchMovies,
+    this.movieDetails,
+  ) : super(MovieState());
 
   Future<void> fetchTrending() async {
     emit(state.copyWith(isLoading: true));
@@ -37,7 +38,7 @@ class MovieCubit extends Cubit<MovieState> {
     }
   }
 
-  Future<void> search(String query) async {
+  Future<void> fetchSearchMovies(String query) async {
     emit(state.copyWith(isLoading: true));
     try {
       final results = await searchMovies(query);
