@@ -1,4 +1,5 @@
 // lib/movies/presentation/pages/movie_details_page.dart
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/movies/application/movie_cubit.dart';
@@ -24,19 +25,24 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
+      appBar: AppBar(
+        // title: const Text("", style: TextStyle(color: Colors.white)),
+        backgroundColor: Colors.black,
+        iconTheme: const IconThemeData(color: Colors.white),
+      ),
       body: SafeArea(
         child: BlocBuilder<MovieCubit, MovieState>(
           builder: (context, state) {
-            if (state.isLoading) {
+            if (state.isDetailsLoading) {
               return const Center(child: CircularProgressIndicator());
-            }  else if (state.error.isNotEmpty) {
+            } else if (state.error.isNotEmpty) {
               return Center(
                 child: Text(
                   state.error,
                   style: const TextStyle(color: Colors.red),
                 ),
               );
-            }else{
+            } else {
               final movie = state.selectedMovie;
               return SingleChildScrollView(
                 padding: const EdgeInsets.all(16),
@@ -45,11 +51,31 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(12),
-                      child: Image.network(
-                        "https://image.tmdb.org/t/p/w500${movie?.posterPath}",
-                        width: double.infinity,
-                        height: 400,
-                        fit: BoxFit.cover,
+                      child: AspectRatio(
+                        aspectRatio: 2 / 3,
+                        child: CachedNetworkImage(
+                          imageUrl:
+                              "https://image.tmdb.org/t/p/w500${movie?.posterPath}",
+                          fit: BoxFit.cover,
+                          width: double.infinity, // ✅ fills full width
+                          placeholder:
+                              (context, url) => Container(
+                                color: Colors.grey[900],
+                                child: const Center(
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                  ),
+                                ),
+                              ),
+                          errorWidget:
+                              (context, url, error) => Container(
+                                color: Colors.grey[800],
+                                child: const Icon(
+                                  Icons.broken_image,
+                                  color: Colors.white,
+                                ),
+                              ),
+                        ),
                       ),
                     ),
                     const SizedBox(height: 16),
@@ -78,9 +104,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                   ],
                 ),
               );
-            
             }
-            
           },
         ),
       ),

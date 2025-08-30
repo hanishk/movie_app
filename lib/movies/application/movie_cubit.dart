@@ -19,42 +19,42 @@ class MovieCubit extends Cubit<MovieState> {
   ) : super(MovieState());
 
   Future<void> fetchTrending() async {
-    emit(state.copyWith(isLoading: true));
+    emit(state.copyWith(isTrendingLoading: true));
     try {
       final movies = await getTrendingMovies();
-      emit(state.copyWith(trending: movies, isLoading: false));
+      emit(state.copyWith(trending: movies, isTrendingLoading: false));
     } catch (e) {
-      emit(state.copyWith(error: e.toString(), isLoading: false));
+      emit(state.copyWith(error: e.toString(), isTrendingLoading: false));
     }
   }
 
   Future<void> fetchNowPlaying() async {
-    emit(state.copyWith(isLoading: true));
+    emit(state.copyWith(isNowPlayingLoading: true));
     try {
       final movies = await getNowPlayingMovies();
-      emit(state.copyWith(nowPlaying: movies, isLoading: false));
+      emit(state.copyWith(nowPlaying: movies, isNowPlayingLoading: false));
     } catch (e) {
-      emit(state.copyWith(error: e.toString(), isLoading: false));
+      emit(state.copyWith(error: e.toString(), isNowPlayingLoading: false));
     }
   }
 
   Future<void> fetchSearchMovies(String query) async {
-    emit(state.copyWith(isLoading: true));
+    emit(state.copyWith(isSearchLoading: true));
     try {
       final results = await searchMovies(query);
-      emit(state.copyWith(searchResults: results, isLoading: false));
+      emit(state.copyWith(searchResults: results, isSearchLoading: false));
     } catch (e) {
-      emit(state.copyWith(error: e.toString(), isLoading: false));
+      emit(state.copyWith(error: e.toString(), isSearchLoading: false));
     }
   }
 
   Future<void> fetchMovieDetails(int id) async {
-    emit(state.copyWith(isLoading: true));
+    emit(state.copyWith(isDetailsLoading: true));
     try {
       final movie = await movieDetails(id);
-      emit(state.copyWith(selectedMovie: movie, isLoading: false));
+      emit(state.copyWith(selectedMovie: movie, isDetailsLoading: false));
     } catch (e) {
-      emit(state.copyWith(error: e.toString(), isLoading: false));
+      emit(state.copyWith(error: e.toString(), isDetailsLoading: false));
     }
   }
 }

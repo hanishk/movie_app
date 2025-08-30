@@ -6,19 +6,24 @@ import 'package:movie_app/movies/domain/usecases/get_now_playing_movies.dart';
 import 'package:movie_app/movies/domain/usecases/get_trending_movies.dart';
 import 'package:movie_app/movies/domain/usecases/search_movies.dart';
 import 'package:movie_app/movies/infrastructure/datasources/movie_api_service.dart';
+import 'package:movie_app/movies/infrastructure/datasources/movie_db_helper.dart';
 import 'package:movie_app/movies/infrastructure/repositories/movie_repository_impl.dart';
 
 final sl = GetIt.instance;
 
 Future<void> initDependencies() async {
   // Dio client
-  sl.registerLazySingleton<Dio>(() => Dio());
+  // sl.registerLazySingleton<Dio>(() => Dio());
 
   // API service
   sl.registerLazySingleton<MovieApiService>(() => MovieApiService());
+  // Database helper
+  sl.registerLazySingleton<MovieDbHelper>(() => MovieDbHelper());
 
   // Repository
-  sl.registerLazySingleton<MovieRepository>(() => MovieRepositoryImpl(sl()));
+  sl.registerLazySingleton<MovieRepository>(
+    () => MovieRepositoryImpl(sl(), sl()),
+  );
 
   // Use cases
   sl.registerLazySingleton(() => GetTrendingMovies(sl()));

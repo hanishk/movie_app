@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../domain/entities/movie.dart';
@@ -21,17 +22,30 @@ class MovieCard extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
-              child: Image.network(
-                "https://image.tmdb.org/t/p/w500${movie.posterPath}",
+              child: CachedNetworkImage(
+                imageUrl: "https://image.tmdb.org/t/p/w500${movie.posterPath}",
+                fit: BoxFit.cover,
                 width: 140,
                 height: 220,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) => Container(
-                  width: 140,
-                  height: 220,
-                  color: Colors.grey.shade800,
-                  child: const Icon(Icons.broken_image, color: Colors.white),
-                ),
+                placeholder:
+                    (context, url) => Container(
+                      width: 140,
+                      height: 220,
+                      color: Colors.grey[900],
+                      child: const Center(
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      ),
+                    ),
+                errorWidget:
+                    (context, url, error) => Container(
+                      width: 140,
+                      height: 220,
+                      color: Colors.grey[800],
+                      child: const Icon(
+                        Icons.broken_image,
+                        color: Colors.white,
+                      ),
+                    ),
               ),
             ),
             const SizedBox(height: 6),

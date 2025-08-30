@@ -6,21 +6,21 @@ class MovieApiService {
   final String baseUrl = "https://api.themoviedb.org/3";
   final String apiKey = "ac927fffe04c302ba7c2e6bc2cbb79ce";
 
-  http.Client? _client;
+  final http.Client _client = http.Client();
 
   Future<List<MovieModel>> fetchMovies(
     String endpoint, {
     Map<String, String>? params,
   }) async {
-    _client?.close();
-    _client = http.Client();
+    // _client.close();
+    // _client = http.Client();
 
     final queryParams = {"api_key": apiKey, ...?params};
     final uri = Uri.parse(
       "$baseUrl/$endpoint",
     ).replace(queryParameters: queryParams);
 
-    final response = await http.get(uri);
+    final response = await _client.get(uri);
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
       print("data: $data");
@@ -33,7 +33,7 @@ class MovieApiService {
   }
 
   Future<MovieModel> fetchMovieDetails(int id) async {
-    final response = await http.get(
+    final response = await _client.get(
       Uri.parse("$baseUrl/movie/$id?api_key=$apiKey"),
     );
     if (response.statusCode == 200) {

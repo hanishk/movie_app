@@ -8,12 +8,12 @@ class MovieModel extends Movie {
     required String posterPath,
     required String releaseDate,
   }) : super(
-          id: id,
-          title: title,
-          overview: overview,
-          posterPath: posterPath,
-          releaseDate: releaseDate,
-        );
+         id: id,
+         title: title,
+         overview: overview,
+         posterPath: posterPath,
+         releaseDate: releaseDate,
+       );
 
   factory MovieModel.fromJson(Map<String, dynamic> json) {
     return MovieModel(
@@ -23,5 +23,15 @@ class MovieModel extends Movie {
       posterPath: json['poster_path'] ?? '',
       releaseDate: json['release_date'] ?? '',
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'overview': overview,
+      'posterPath': posterPath,
+      'releaseDate': releaseDate,
+    };
   }
 }

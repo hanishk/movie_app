@@ -49,6 +49,7 @@ class _SearchPageState extends State<SearchPage> {
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: Colors.black,
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: Column(
         children: [
@@ -72,7 +73,7 @@ class _SearchPageState extends State<SearchPage> {
           Expanded(
             child: BlocBuilder<MovieCubit, MovieState>(
               builder: (context, state) {
-                if (state.isLoading) {
+                if (state.isSearchLoading) {
                   return const Center(child: CircularProgressIndicator());
                 }
                 if (state.error.isNotEmpty) {

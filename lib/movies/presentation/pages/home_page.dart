@@ -29,7 +29,7 @@ class HomePage extends StatelessWidget {
       backgroundColor: Colors.black,
       body: BlocBuilder<MovieCubit, MovieState>(
         builder: (context, state) {
-          if (state.isLoading) {
+          if (state.isTrendingLoading || state.isNowPlayingLoading) {
             return const Center(child: CircularProgressIndicator());
           }
           if (state.error.isNotEmpty) {
