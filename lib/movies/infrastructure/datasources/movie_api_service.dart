@@ -1,12 +1,13 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+
 import '../models/movie_model.dart';
 
 class MovieApiService {
   final String baseUrl = "https://api.themoviedb.org/3";
   final String apiKey = "ac927fffe04c302ba7c2e6bc2cbb79ce";
 
-  final http.Client _client = http.Client();
+  // final http.Client _client = http.Client();
 
   Future<List<MovieModel>> fetchMovies(
     String endpoint, {
@@ -20,20 +21,27 @@ class MovieApiService {
       "$baseUrl/$endpoint",
     ).replace(queryParameters: queryParams);
 
-    final response = await _client.get(uri);
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-      print("data: $data");
-      return (data['results'] as List)
-          .map((e) => MovieModel.fromJson(e))
-          .toList();
-    } else {
-      throw Exception("Failed to fetch movies");
+    // print("Fetching movies from: $uri");
+    try {
+      final response = await http.get(uri);
+      // print(" Response status: ${response.statusCode}");
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        // print("data: $data");
+        return (data['results'] as List)
+            .map((e) => MovieModel.fromJson(e))
+            .toList();
+      } else {
+        throw Exception("Failed to fetch movies");
+      }
+    } catch (e) {
+      print("exception: $e");
     }
+    throw Exception("Failed to fetch movies");
   }
 
   Future<MovieModel> fetchMovieDetails(int id) async {
-    final response = await _client.get(
+    final response = await http.get(
       Uri.parse("$baseUrl/movie/$id?api_key=$apiKey"),
     );
     if (response.statusCode == 200) {

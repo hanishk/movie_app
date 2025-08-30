@@ -22,16 +22,14 @@ class AppRouter {
         builder: (context, state) {
           return BlocProvider(
             create:
-                (_) =>
-                    MovieCubit(
-                        sl<GetTrendingMovies>(),
-                        sl<GetNowPlayingMovies>(),
-                        sl<SearchMovies>(),
-                        sl<GetMovieDetails>(),
-                        sl<BookmarkMovies>(),
-                      )
-                      ..fetchTrending()
-                      ..fetchNowPlaying(),
+                (_) => MovieCubit(
+                  sl<GetTrendingMovies>(),
+                  sl<GetNowPlayingMovies>(),
+                  sl<SearchMovies>(),
+                  sl<GetMovieDetails>(),
+                  sl<BookmarkMovies>(),
+                ),
+
             child: const HomePage(),
           );
         },

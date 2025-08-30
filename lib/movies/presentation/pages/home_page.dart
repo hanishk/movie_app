@@ -5,8 +5,20 @@ import 'package:movie_app/movies/application/movie_state.dart';
 import '../../application/movie_cubit.dart';
 import '../widgets/movie_card.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    context.read<MovieCubit>().fetchTrending();
+    context.read<MovieCubit>().fetchNowPlaying();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
