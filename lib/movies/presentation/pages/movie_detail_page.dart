@@ -37,7 +37,8 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
             onPressed: () {
               final movie = context.read<MovieCubit>().state.selectedMovie;
               if (movie != null) {
-                final deepLink = "movieapp://movie/${movie.id}";
+                final deepLink = "https://movies.com/movie/${movie.id}";
+
                 SharePlus.instance.share(
                   ShareParams(
                     text: 'Check out this movie: ${movie.title}\n$deepLink',

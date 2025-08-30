@@ -54,10 +54,12 @@ class _MovieAppState extends State<MovieApp> {
   }
 
   void _handleDeepLink(Uri uri) {
-    if (uri.scheme == "movieapp" && uri.host == "movie") {
-      final id = uri.pathSegments.isNotEmpty ? uri.pathSegments.first : null;
-      if (id != null) {
-        _router.go("/movie/$id");
+    if (uri.host == "movies.com" && uri.pathSegments.isNotEmpty) {
+      if (uri.pathSegments[0] == "movie") {
+        final id = uri.pathSegments[1];
+        if (id != null) {
+          _router.go("/movie/$id");
+        }
       }
     }
   }
