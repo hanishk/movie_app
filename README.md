@@ -1,9 +1,3 @@
-Perfect ✅ — a polished **README** can really impress reviewers because it shows clarity and professionalism.
-
-Here’s a draft you can drop into your **GitHub README.md**:
-
----
-
 # 🎬 Movie App 
 
 A Flutter application showcasing movies using **The Movie Database (TMDb) API**.
