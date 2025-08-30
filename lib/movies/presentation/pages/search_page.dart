@@ -28,6 +28,8 @@ class _SearchPageState extends State<SearchPage> {
       final query = _controller.text.trim();
       if (query.isNotEmpty) {
         context.read<MovieCubit>().fetchSearchMovies(query);
+      } else {
+        context.read<MovieCubit>().clearSearch();
       }
     });
   }

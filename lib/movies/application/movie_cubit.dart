@@ -77,4 +77,8 @@ class MovieCubit extends Cubit<MovieState> {
     await getBookmarkMovies.removeBookMarkMovie(id);
     loadBookmarks();
   }
+
+  void clearSearch() {
+    emit(state.copyWith(searchResults: [], isSearchLoading: false, error: ""));
+  }
 }
