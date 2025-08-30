@@ -24,6 +24,10 @@ class HomePage extends StatelessWidget {
               context.push('/search');
             },
           ),
+          IconButton(
+            icon: const Icon(Icons.bookmark, color: Colors.white),
+            onPressed: () => context.push('/bookmarks'),
+          ),
         ],
       ),
       backgroundColor: Colors.black,

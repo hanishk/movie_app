@@ -61,4 +61,19 @@ class MovieRepositoryImpl implements MovieRepository {
       return all.firstWhere((m) => m.id == id);
     }
   }
+
+  @override
+  Future<void> bookmarkMovie(Movie movie) async {
+    await dbHelper.bookmarkMovie(movie as dynamic); // cast to MovieModel
+  }
+
+  @override
+  Future<void> removeBookmark(int id) async {
+    await dbHelper.removeBookmark(id);
+  }
+
+  @override
+  Future<List<Movie>> getBookmarks() async {
+    return await dbHelper.getBookmarks();
+  }
 }

@@ -10,6 +10,7 @@ class MovieState {
   final bool isNowPlayingLoading;
   final bool isSearchLoading;
   final bool isDetailsLoading;
+  final List<Movie> bookmarks;
 
   MovieState({
     this.trending = const [],
@@ -21,6 +22,7 @@ class MovieState {
     this.isNowPlayingLoading = false,
     this.isSearchLoading = false,
     this.isDetailsLoading = false,
+    this.bookmarks = const [],
   });
 
   MovieState copyWith({
@@ -33,6 +35,7 @@ class MovieState {
     bool? isNowPlayingLoading,
     bool? isSearchLoading,
     bool? isDetailsLoading,
+    List<Movie>? bookmarks,
   }) {
     return MovieState(
       trending: trending ?? this.trending,
@@ -44,6 +47,7 @@ class MovieState {
       isNowPlayingLoading: isNowPlayingLoading ?? this.isNowPlayingLoading,
       isSearchLoading: isSearchLoading ?? this.isSearchLoading,
       isDetailsLoading: isDetailsLoading ?? this.isDetailsLoading,
+      bookmarks: bookmarks ?? this.bookmarks,
     );
   }
 }

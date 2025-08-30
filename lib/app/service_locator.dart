@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:dio/dio.dart';
 import 'package:movie_app/movies/domain/repositories/movie_repository.dart';
+import 'package:movie_app/movies/domain/usecases/get_bookmark_movies.dart';
 import 'package:movie_app/movies/domain/usecases/get_movie_details.dart';
 import 'package:movie_app/movies/domain/usecases/get_now_playing_movies.dart';
 import 'package:movie_app/movies/domain/usecases/get_trending_movies.dart';
@@ -30,4 +31,5 @@ Future<void> initDependencies() async {
   sl.registerLazySingleton(() => GetNowPlayingMovies(sl()));
   sl.registerLazySingleton(() => SearchMovies(sl()));
   sl.registerLazySingleton(() => GetMovieDetails(sl()));
+  sl.registerLazySingleton(() => BookmarkMovies(sl()));
 }

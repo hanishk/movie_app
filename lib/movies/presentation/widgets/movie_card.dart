@@ -17,7 +17,7 @@ class MovieCard extends StatelessWidget {
       child: SizedBox(
         width: 140,
         child: Column(
-          mainAxisSize: MainAxisSize.min, // 👈 prevents overflow
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ClipRRect(

@@ -21,9 +21,9 @@ class MovieDbHelper {
 
     return await openDatabase(
       path,
-      version: 1,
-      onCreate: (db, version) {
-        db.execute('''
+      version: 2,
+      onCreate: (db, version) async {
+        await db.execute('''
           CREATE TABLE movies (
             id INTEGER PRIMARY KEY,
             title TEXT,
@@ -32,6 +32,15 @@ class MovieDbHelper {
             releaseDate TEXT
           )
         ''');
+        await db.execute('''
+     CREATE TABLE bookmarks (
+      id INTEGER PRIMARY KEY,
+      title TEXT,
+      overview TEXT,
+      posterPath TEXT,
+      releaseDate TEXT
+    )
+  ''');
       },
     );
   }
@@ -56,5 +65,32 @@ class MovieDbHelper {
   Future<void> clearMovies() async {
     final db = await database;
     await db.delete('movies');
+  }
+
+  Future<void> bookmarkMovie(MovieModel movie) async {
+    final db = await database;
+    await db.insert(
+      'bookmarks',
+      movie.toJson(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
+  Future<void> removeBookmark(int id) async {
+    final db = await database;
+    await db.delete('bookmarks', where: 'id = ?', whereArgs: [id]);
+  }
+
+  Future<List<MovieModel>> getBookmarks() async {
+    final db = await database;
+    try {
+      final maps = await db.query('bookmarks');
+      return maps.map((e) => MovieModel.fromJson(e)).toList();
+    } catch (e) {
+      if (e.toString().contains("no such table: bookmarks")) {
+        return [];
+      }
+      rethrow;
+    }
   }
 }

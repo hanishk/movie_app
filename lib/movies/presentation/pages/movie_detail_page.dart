@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/movies/application/movie_cubit.dart';
 import 'package:movie_app/movies/application/movie_state.dart';
+import 'package:share_plus/share_plus.dart';
 
 class MovieDetailsPage extends StatefulWidget {
   final int movieId;
@@ -19,6 +20,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
   void initState() {
     super.initState();
     context.read<MovieCubit>().fetchMovieDetails(widget.movieId);
+    context.read<MovieCubit>().loadBookmarks();
   }
 
   @override
@@ -29,6 +31,44 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
         // title: const Text("", style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.black,
         iconTheme: const IconThemeData(color: Colors.white),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.share, color: Colors.white),
+            onPressed: () {
+              final movie = context.read<MovieCubit>().state.selectedMovie;
+              if (movie != null) {
+                final deepLink = "movieapp://movie/${movie.id}";
+                SharePlus.instance.share(
+                  ShareParams(
+                    text: 'Check out this movie: ${movie.title}\n$deepLink',
+                  ),
+                );
+              }
+            },
+          ),
+          BlocBuilder<MovieCubit, MovieState>(
+            builder: (context, state) {
+              final movie = state.selectedMovie;
+              if (movie == null) return const SizedBox.shrink();
+
+              final isBookmarked = state.bookmarks.any((m) => m.id == movie.id);
+
+              return IconButton(
+                icon: Icon(
+                  isBookmarked ? Icons.bookmark : Icons.bookmark_border,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  if (isBookmarked) {
+                    context.read<MovieCubit>().removeBookmark(movie.id);
+                  } else {
+                    context.read<MovieCubit>().addBookmark(movie);
+                  }
+                },
+              );
+            },
+          ),
+        ],
       ),
       body: SafeArea(
         child: BlocBuilder<MovieCubit, MovieState>(

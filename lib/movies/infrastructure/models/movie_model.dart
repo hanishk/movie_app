@@ -20,8 +20,8 @@ class MovieModel extends Movie {
       id: json['id'],
       title: json['title'] ?? '',
       overview: json['overview'] ?? '',
-      posterPath: json['poster_path'] ?? '',
-      releaseDate: json['release_date'] ?? '',
+      posterPath: json['poster_path'] ?? json['posterPath'] ?? '',
+      releaseDate: json['release_date'] ?? json['posterPath'] ?? '',
     );
   }
 
