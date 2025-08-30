@@ -4,7 +4,7 @@ Here’s a draft you can drop into your **GitHub README.md**:
 
 ---
 
-# 🎬 Movie App (Flutter Assignment - Inshorts)
+# 🎬 Movie App 
 
 A Flutter application showcasing movies using **The Movie Database (TMDb) API**.
 The app supports online/offline viewing, bookmarking movies, search functionality, and **deep links** to directly open a specific movie.
